@@ -49,7 +49,8 @@ contracts/cache/
 next-env.d.ts
 
 # md files
-*.md
+AGENTS.md
+CLAUDE.md
 
 # cursor
 .cursor/
