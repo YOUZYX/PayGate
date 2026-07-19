@@ -28,7 +28,7 @@ export default function Home() {
             <NavIcon href="/docs" label="Documentation" internal>
               <BookText className="size-4" />
             </NavIcon>
-            <NavIcon href="https://github.com" label="View Source">
+            <NavIcon href="https://github.com/YOUZYX/PayGate" label="View Source">
               <GithubMark className="size-4" />
             </NavIcon>
           </div>
