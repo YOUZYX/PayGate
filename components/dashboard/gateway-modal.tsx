@@ -148,8 +148,8 @@ function GatewayModalBody({
     : "";
 
   return (
-    <DialogContent className="border border-border bg-card ring-0 sm:max-w-lg">
-        <DialogHeader>
+    <DialogContent className="min-w-0 overflow-hidden border border-border bg-card ring-0 sm:max-w-lg">
+        <DialogHeader className="min-w-0 pr-8">
           <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
             {["01", "02", "03"].map((n, i) => (
               <span key={n} className="flex items-center gap-2">
@@ -178,8 +178,8 @@ function GatewayModalBody({
 
         {/* ── Step 1: name + target URL ─────────────────────── */}
         {step === 0 && (
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1.5">
+          <div className="flex min-w-0 flex-col gap-4">
+            <div className="flex min-w-0 flex-col gap-1.5">
               <Label className="text-[10px] uppercase tracking-widest text-muted-foreground">
                 Gateway name
               </Label>
@@ -190,11 +190,11 @@ function GatewayModalBody({
                 className="font-mono text-sm"
               />
             </div>
-            <div className="flex flex-col gap-1.5">
+            <div className="flex min-w-0 flex-col gap-1.5">
               <Label className="text-[10px] uppercase tracking-widest text-muted-foreground">
                 Target API URL
               </Label>
-              <div className="flex gap-2">
+              <div className="flex min-w-0 gap-2">
                 <Input
                   value={targetUrl}
                   onChange={(e) => {
@@ -202,7 +202,7 @@ function GatewayModalBody({
                     setPing(null);
                   }}
                   placeholder="https://api.example.com/data"
-                  className="font-mono text-sm"
+                  className="min-w-0 flex-1 font-mono text-sm"
                   aria-invalid={targetUrl.length > 0 && !urlValid}
                 />
                 <button
@@ -242,7 +242,7 @@ function GatewayModalBody({
               type="button"
               disabled={!name.trim() || !urlValid}
               onClick={() => setStep(1)}
-              className="mt-2 inline-flex items-center justify-center gap-2 border border-acid bg-acid px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-widest text-primary-foreground transition-colors hover:bg-transparent hover:text-acid disabled:pointer-events-none disabled:opacity-40"
+              className="mt-2 inline-flex w-full items-center justify-center gap-2 border border-acid bg-acid px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-widest text-primary-foreground transition-colors hover:bg-transparent hover:text-acid disabled:pointer-events-none disabled:opacity-40"
             >
               Next <ArrowRight className="size-3.5" />
             </button>
@@ -251,7 +251,7 @@ function GatewayModalBody({
 
         {/* ── Step 2: price ─────────────────────────────────── */}
         {step === 1 && (
-          <div className="flex flex-col gap-4">
+          <div className="flex min-w-0 flex-col gap-4">
             <div className="flex flex-col gap-1.5">
               <Label className="text-[10px] uppercase tracking-widest text-muted-foreground">
                 Billing model
@@ -306,7 +306,7 @@ function GatewayModalBody({
                 </p>
               )}
               {weiPreview && (
-                <p className="font-mono text-[10px] tracking-widest text-muted-foreground">
+                <p className="break-all font-mono text-[10px] tracking-widest text-muted-foreground">
                   = {weiPreview} WEI{billingType === "METERED" && " / BYTE"}
                 </p>
               )}
@@ -334,11 +334,11 @@ function GatewayModalBody({
             <div className="border border-border bg-accent/40 px-3 py-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
               2% protocol fee · 98% to you
             </div>
-            <div className="flex gap-2">
+            <div className="flex min-w-0 gap-2">
               <button
                 type="button"
                 onClick={() => setStep(0)}
-                className="border border-border px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
+                className="shrink-0 border border-border px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
               >
                 Back
               </button>
@@ -346,7 +346,7 @@ function GatewayModalBody({
                 type="button"
                 disabled={!weiPreview || createMutation.isPending}
                 onClick={() => createMutation.mutate()}
-                className="inline-flex flex-1 items-center justify-center gap-2 border border-acid bg-acid px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-widest text-primary-foreground transition-colors hover:bg-transparent hover:text-acid disabled:pointer-events-none disabled:opacity-40"
+                className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 border border-acid bg-acid px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-widest text-primary-foreground transition-colors hover:bg-transparent hover:text-acid disabled:pointer-events-none disabled:opacity-40"
               >
                 {createMutation.isPending ? (
                   <Loader2 className="size-3.5 animate-spin" />
@@ -362,33 +362,36 @@ function GatewayModalBody({
 
         {/* ── Step 3: live proxy URL + curl ─────────────────── */}
         {step === 2 && created && (
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1.5">
+          <div className="flex min-w-0 flex-col gap-4">
+            <div className="flex min-w-0 flex-col gap-1.5">
               <Label className="text-[10px] uppercase tracking-widest text-muted-foreground">
                 Proxy URL
               </Label>
-              <div className="flex items-center gap-2 border border-acid bg-accent/40 p-2">
-                <span className="flex-1 truncate font-mono text-xs text-acid">
+              <div className="flex min-w-0 items-center gap-2 border border-acid bg-accent/40 p-2">
+                <span className="min-w-0 flex-1 truncate font-mono text-xs text-acid">
                   {created.proxyUrl}
                 </span>
-                <CopyButton value={created.proxyUrl} label="Proxy URL copied" />
+                <CopyButton
+                  value={created.proxyUrl}
+                  label="Proxy URL copied"
+                />
               </div>
             </div>
-            <div className="flex flex-col gap-1.5">
-              <div className="flex items-center justify-between">
+            <div className="flex min-w-0 flex-col gap-1.5">
+              <div className="flex min-w-0 items-center justify-between gap-2">
                 <Label className="text-[10px] uppercase tracking-widest text-muted-foreground">
                   402 handshake
                 </Label>
                 <CopyButton value={curlExample} label="curl copied" />
               </div>
-              <pre className="overflow-x-auto border border-border bg-background p-3 font-mono text-[10px] leading-relaxed text-muted-foreground">
+              <pre className="max-h-56 w-full max-w-full min-w-0 overflow-x-auto overflow-y-auto whitespace-pre-wrap break-all border border-border bg-background p-3 font-mono text-[10px] leading-relaxed text-muted-foreground">
                 {curlExample}
               </pre>
             </div>
             <button
               type="button"
               onClick={() => onOpenChange(false)}
-              className="border border-border px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-widest transition-colors hover:border-acid hover:text-acid"
+              className="w-full border border-border px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-widest transition-colors hover:border-acid hover:text-acid"
             >
               Done
             </button>
